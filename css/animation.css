@@ -1,0 +1,216 @@
+/* ========================================
+   Digital Finance Center - 动画效果文件
+   Framer Motion 风格动画
+   ======================================== */
+
+/* ========================================
+   1. 基础动画
+   ======================================== */
+
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scale-in {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-down {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-left {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-right {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* ========================================
+   2. 发光效果动画
+   ======================================== */
+
+@keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(102, 126, 234, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.6); }
+}
+
+/* ========================================
+   3. 旋转动画
+   ======================================== */
+
+@keyframes spin-icon {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes spin-loader {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   4. 脉冲效果
+   ======================================== */
+
+@keyframes pulse-indicator {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; box-shadow: 0 0 0 10px rgba(0, 230, 118, 0); }
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ========================================
+   5. 浮动动画
+   ======================================== */
+
+@keyframes aurora-float {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-20px) translateX(10px); }
+    50% { transform: translateY(-40px) translateX(20px); }
+    75% { transform: translateY(-20px) translateX(10px); }
+}
+
+@keyframes particle-float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.5; }
+    50% { transform: translateY(-30px) translateX(15px); opacity: 1; }
+}
+
+/* ========================================
+   6. 波浪动画
+   ======================================== */
+
+@keyframes wave {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+}
+
+@keyframes ripple {
+    0% { transform: scale(0); opacity: 1; }
+    100% { transform: scale(4); opacity: 0; }
+}
+
+/* ========================================
+   7. 卡片动画
+   ======================================== */
+
+@keyframes card-lift {
+    from { transform: translateY(0) rotateX(0deg); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); }
+    to { transform: translateY(-8px) rotateX(5deg); box-shadow: 0 12px 24px rgba(102, 126, 234, 0.25); }
+}
+
+/* ========================================
+   8. 数字滚动动画
+   ======================================== */
+
+@keyframes number-scroll {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100%); }
+}
+
+/* ========================================
+   9. 渐变动画
+   ======================================== */
+
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ========================================
+   10. 进入动画
+   ======================================== */
+
+@keyframes page-enter {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes stagger-enter {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================
+   11. Toast 动画
+   ======================================== */
+
+@keyframes toast-slide-in {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes toast-slide-out {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(100px); }
+}
+
+/* ========================================
+   12. 应用类
+   ======================================== */
+
+.fade-in { animation: fade-in 0.3s ease forwards; }
+.scale-in { animation: scale-in 0.3s ease forwards; }
+.slide-up { animation: slide-up 0.3s ease forwards; }
+.slide-down { animation: slide-down 0.3s ease forwards; }
+.slide-left { animation: slide-left 0.3s ease forwards; }
+.slide-right { animation: slide-right 0.3s ease forwards; }
+.glow-pulse { animation: glow-pulse 2s ease-in-out infinite; }
+.spin { animation: spin-icon 0.6s linear; }
+.card-lift { animation: card-lift 0.3s ease forwards; }
+.page-enter { animation: page-enter 0.5s ease forwards; }
+
+/* ========================================
+   13. 延迟动画
+   ======================================== */
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+
+/* ========================================
+   14. 动画速度
+   ======================================== */
+
+.animate-fast { animation-duration: 0.15s; }
+.animate-normal { animation-duration: 0.3s; }
+.animate-slow { animation-duration: 0.5s; }
+.animate-slower { animation-duration: 1s; }
+
+/* ========================================
+   15. 过渡效果
+   ======================================== */
+
+.transition-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+.transition-fast { transition: all 0.15s ease; }
+.transition-slow { transition: all 0.5s ease; }
+
+/* ========================================
+   16. 响应式动画
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

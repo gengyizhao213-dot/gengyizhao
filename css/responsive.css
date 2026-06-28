@@ -1,0 +1,810 @@
+/* ========================================
+   Digital Finance Center - 响应式设计文件
+   Desktop / Tablet / Phone 适配
+   ======================================== */
+
+/* ========================================
+   1. 平板设备 (768px - 1024px)
+   ======================================== */
+
+@media (max-width: 1024px) {
+    /* 容器调整 */
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    /* Hero 内容布局 */
+    .hero-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    .hero-visual {
+        height: 300px;
+    }
+
+    /* 导航菜单 */
+    .nav-menu {
+        gap: var(--spacing-md);
+    }
+
+    .nav-item {
+        font-size: 13px;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    /* 时间区域 */
+    .time-section {
+        gap: var(--spacing-lg);
+    }
+
+    /* 资产网格 */
+    .asset-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: var(--spacing-md);
+    }
+
+    /* AI 网格 */
+    .ai-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    }
+
+    /* 新闻项目 */
+    .news-item {
+        grid-template-columns: 100px 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .news-image {
+        width: 100px;
+        height: 70px;
+    }
+
+    /* 统计卡片 */
+    .hero-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 页脚内容 */
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-xl);
+    }
+}
+
+/* ========================================
+   2. 手机设备 (480px - 768px)
+   ======================================== */
+
+@media (max-width: 768px) {
+    /* 基础字体大小 */
+    body {
+        font-size: 13px;
+    }
+
+    /* 容器调整 */
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    /* 区域间距 */
+    .section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    /* 顶部栏 */
+    .top-bar .container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .time-section {
+        width: 100%;
+        justify-content: center;
+        gap: var(--spacing-lg);
+    }
+
+    .market-status {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* 头部导航 */
+    .header .container {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .logo {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .nav-menu {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--spacing-md);
+    }
+
+    .nav-item {
+        font-size: 12px;
+        padding: var(--spacing-xs) var(--spacing-md);
+    }
+
+    .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Hero 部分 */
+    .hero-section {
+        padding: var(--spacing-xl) 0;
+    }
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .hero-subtitle {
+        font-size: 18px;
+    }
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+    .hero-stats {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .hero-visual {
+        display: none;
+    }
+
+    /* 区域标题 */
+    .section-header {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .section-title {
+        font-size: 20px;
+        width: 100%;
+    }
+
+    .section-controls {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .search-input {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .sort-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .sort-btn {
+        flex: 1;
+        font-size: 12px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .refresh-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* 标签页 */
+    .tabs {
+        gap: var(--spacing-sm);
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+        font-size: 12px;
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    /* 资产网格 */
+    .asset-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: var(--spacing-md);
+    }
+
+    .asset-card {
+        padding: var(--spacing-md);
+    }
+
+    .asset-price {
+        font-size: 16px;
+    }
+
+    .asset-symbol {
+        font-size: 14px;
+    }
+
+    /* 新闻项目 */
+    .news-item {
+        grid-template-columns: 80px 1fr;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md);
+    }
+
+    .news-image {
+        width: 80px;
+        height: 60px;
+    }
+
+    .news-title {
+        font-size: 14px;
+    }
+
+    .news-description {
+        font-size: 12px;
+        -webkit-line-clamp: 1;
+    }
+
+    .news-meta {
+        font-size: 11px;
+    }
+
+    /* AI 网格 */
+    .ai-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ai-card {
+        padding: var(--spacing-md);
+    }
+
+    .ai-card-header h3 {
+        font-size: 14px;
+    }
+
+    /* 关于部分 */
+    .about-content h2 {
+        font-size: 24px;
+    }
+
+    .about-content p {
+        font-size: 14px;
+    }
+
+    .about-features {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .feature-icon {
+        font-size: 24px;
+    }
+
+    .feature-text {
+        font-size: 12px;
+    }
+
+    /* 图表抽屉 */
+    .chart-drawer {
+        width: 100%;
+        max-width: 100%;
+        right: -100%;
+    }
+
+    .drawer-controls {
+        gap: var(--spacing-xs);
+        padding: var(--spacing-md);
+    }
+
+    .timeframe-btn {
+        font-size: 11px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    /* 页脚 */
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+
+    .footer-bottom {
+        padding-top: var(--spacing-md);
+    }
+
+    .footer-bottom p {
+        font-size: 11px;
+    }
+
+    /* Toast 通知 */
+    .toast-container {
+        bottom: var(--spacing-md);
+        right: var(--spacing-md);
+        left: var(--spacing-md);
+    }
+
+    .toast {
+        min-width: unset;
+    }
+
+    /* 按钮 */
+    .theme-toggle,
+    .scroll-to-top {
+        width: 28px;
+        height: 28px;
+    }
+
+    /* 滚动条 */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+}
+
+/* ========================================
+   3. 小手机设备 (320px - 480px)
+   ======================================== */
+
+@media (max-width: 480px) {
+    /* 基础字体大小 */
+    body {
+        font-size: 12px;
+    }
+
+    /* 容器调整 */
+    .container {
+        padding: 0 var(--spacing-sm);
+    }
+
+    /* CSS 变量调整 */
+    :root {
+        --spacing-lg: 16px;
+        --spacing-xl: 24px;
+        --spacing-2xl: 32px;
+    }
+
+    /* 区域间距 */
+    .section {
+        padding: var(--spacing-lg) 0;
+    }
+
+    /* 顶部栏 */
+    .top-bar {
+        padding: var(--spacing-sm) 0;
+    }
+
+    .time-section {
+        gap: var(--spacing-md);
+    }
+
+    .time-label {
+        font-size: 10px;
+    }
+
+    .time-value {
+        font-size: 12px;
+    }
+
+    .status-text {
+        font-size: 10px;
+    }
+
+    /* 头部导航 */
+    .header {
+        padding: var(--spacing-sm) 0;
+        top: 40px;
+    }
+
+    .logo {
+        font-size: 14px;
+    }
+
+    .logo-icon {
+        font-size: 18px;
+    }
+
+    .logo-text {
+        display: none;
+    }
+
+    .nav-menu {
+        gap: var(--spacing-sm);
+    }
+
+    .nav-item {
+        font-size: 11px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .header-right {
+        gap: var(--spacing-sm);
+    }
+
+    /* Hero 部分 */
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+    .hero-description {
+        font-size: 13px;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .stat-card {
+        padding: var(--spacing-md);
+    }
+
+    .stat-value {
+        font-size: 22px;
+    }
+
+    .stat-label {
+        font-size: 10px;
+    }
+
+    /* 区域标题 */
+    .section-title {
+        font-size: 18px;
+    }
+
+    .search-input {
+        font-size: 12px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .sort-btn {
+        font-size: 11px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .refresh-btn {
+        font-size: 12px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .refresh-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* 标签页 */
+    .tabs {
+        gap: var(--spacing-xs);
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .tab-btn {
+        font-size: 11px;
+        padding: var(--spacing-md) var(--spacing-xs);
+    }
+
+    /* 资产网格 */
+    .asset-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: var(--spacing-sm);
+    }
+
+    .asset-card {
+        padding: var(--spacing-sm);
+    }
+
+    .asset-price {
+        font-size: 14px;
+    }
+
+    .asset-symbol {
+        font-size: 12px;
+    }
+
+    .asset-name {
+        font-size: 10px;
+    }
+
+    .asset-change {
+        font-size: 11px;
+    }
+
+    /* 新闻项目 */
+    .news-item {
+        grid-template-columns: 70px 1fr;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-sm);
+    }
+
+    .news-image {
+        width: 70px;
+        height: 50px;
+    }
+
+    .news-title {
+        font-size: 12px;
+    }
+
+    .news-description {
+        font-size: 11px;
+        -webkit-line-clamp: 1;
+    }
+
+    .news-meta {
+        font-size: 10px;
+    }
+
+    /* AI 网格 */
+    .ai-card {
+        padding: var(--spacing-sm);
+    }
+
+    .ai-card-header h3 {
+        font-size: 13px;
+    }
+
+    .ai-badge {
+        font-size: 9px;
+    }
+
+    .sentiment-label,
+    .trend-text,
+    .dxy-value,
+    .gold-value,
+    .oil-value,
+    .fear-value,
+    .flow-text {
+        font-size: 12px;
+    }
+
+    .dxy-value,
+    .gold-value,
+    .oil-value {
+        font-size: 18px;
+    }
+
+    /* 关于部分 */
+    .about-content h2 {
+        font-size: 20px;
+    }
+
+    .about-content p {
+        font-size: 13px;
+    }
+
+    .about-features {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-sm);
+    }
+
+    .feature-icon {
+        font-size: 20px;
+    }
+
+    .feature-text {
+        font-size: 11px;
+    }
+
+    /* 图表抽屉 */
+    .drawer-header h3 {
+        font-size: 16px;
+    }
+
+    .timeframe-btn {
+        font-size: 10px;
+        padding: var(--spacing-xs) var(--spacing-xs);
+    }
+
+    /* 页脚 */
+    .footer-section h4 {
+        font-size: 12px;
+    }
+
+    .footer-section p {
+        font-size: 11px;
+    }
+
+    .footer-section a {
+        font-size: 11px;
+    }
+
+    .footer-bottom p {
+        font-size: 10px;
+    }
+
+    /* Toast 通知 */
+    .toast {
+        min-width: 240px;
+        font-size: 12px;
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    /* 按钮 */
+    .theme-toggle,
+    .scroll-to-top {
+        width: 24px;
+        height: 24px;
+    }
+
+    /* 更新信息 */
+    .update-time {
+        font-size: 10px;
+    }
+}
+
+/* ========================================
+   4. 横屏模式
+   ======================================== */
+
+@media (orientation: landscape) and (max-height: 500px) {
+    /* 减少垂直间距 */
+    .section {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .hero-section {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .hero-visual {
+        display: none;
+    }
+
+    .hero-title {
+        font-size: 28px;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+    }
+
+    .hero-stats {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .stat-card {
+        padding: var(--spacing-md);
+    }
+
+    .stat-value {
+        font-size: 20px;
+    }
+
+    .stat-label {
+        font-size: 10px;
+    }
+
+    /* 隐藏一些元素 */
+    .section-header {
+        gap: var(--spacing-sm);
+    }
+
+    .asset-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .news-item {
+        grid-template-columns: 60px 1fr;
+    }
+
+    .news-image {
+        width: 60px;
+        height: 45px;
+    }
+
+    .ai-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+/* ========================================
+   5. 竖屏模式
+   ======================================== */
+
+@media (orientation: portrait) {
+    /* 竖屏特定样式 */
+    .nav-menu {
+        flex-wrap: wrap;
+    }
+
+    .asset-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+/* ========================================
+   6. 高分辨率屏幕 (Retina)
+   ======================================== */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* 优化高分辨率显示 */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 增强边框清晰度 */
+    .asset-card,
+    .ai-card,
+    .news-item {
+        border-width: 0.5px;
+    }
+}
+
+/* ========================================
+   7. 触摸设备优化
+   ======================================== */
+
+@media (hover: none) and (pointer: coarse) {
+    /* 增加可点击区域 */
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    .asset-card,
+    .ai-card,
+    .news-item {
+        min-height: 60px;
+    }
+
+    /* 禁用悬停效果 */
+    .asset-card:hover {
+        transform: none;
+    }
+
+    .ai-card:hover {
+        transform: none;
+    }
+
+    .news-item:hover {
+        transform: none;
+    }
+
+    /* 使用活跃状态 */
+    .asset-card:active,
+    .ai-card:active,
+    .news-item:active {
+        opacity: 0.8;
+    }
+}
+
+/* ========================================
+   8. 打印样式
+   ======================================== */
+
+@media print {
+    /* 隐藏不必要的元素 */
+    .top-bar,
+    .header,
+    .chart-drawer,
+    .footer,
+    .toast-container,
+    .scroll-to-top,
+    .refresh-btn {
+        display: none;
+    }
+
+    /* 调整页面样式 */
+    body {
+        background: white;
+        color: black;
+    }
+
+    .section {
+        page-break-inside: avoid;
+    }
+
+    a {
+        color: blue;
+        text-decoration: underline;
+    }
+}

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <!-- 字符编码和视口设置 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Digital Finance Center - 实时金融市场数据平台，支持加密货币、外汇、贵金属、能源和股票指数。">
+    <meta name="keywords" content="金融数据, 加密货币, 外汇, 黄金, 原油, 股票, 实时行情">
+    <meta name="theme-color" content="#0a0a0f">
+    
+    <!-- Open Graph 社交分享 -->
+    <meta property="og:title" content="Digital Finance Center">
+    <meta property="og:description" content="实时金融市场数据平台">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect fill='%230a0a0f' width='1200' height='630'/%3E%3Ctext x='50%' y='50%' font-size='60' fill='%23667eea' text-anchor='middle' dominant-baseline='middle' font-family='system-ui'%3EDigital Finance Center%3C/text%3E%3C/svg%3E">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Digital Finance Center">
+    <meta name="twitter:description" content="实时金融市场数据平台">
+    
+    <!-- PWA 清单 -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%230a0a0f' width='100' height='100'/%3E%3Ctext x='50' y='50' font-size='60' fill='%23667eea' text-anchor='middle' dominant-baseline='middle' font-family='system-ui'%3E💰%3C/text%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect fill='%230a0a0f' width='180' height='180'/%3E%3Ctext x='90' y='90' font-size='100' fill='%23667eea' text-anchor='middle' dominant-baseline='middle' font-family='system-ui'%3E💰%3C/text%3E%3C/svg%3E">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- TradingView 脚本 -->
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    
+    <title>Digital Finance Center - 实时金融市场数据平台</title>
+</head>
+<body>
+    <!-- 页面加载动画 -->
+    <div id="pageLoader" class="page-loader">
+        <div class="loader-content">
+            <div class="loader-spinner"></div>
+            <p class="loader-text">加载中...</p>
+        </div>
+    </div>
+
+    <!-- 顶部时间和市场状态栏 -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="time-section">
+                <!-- 北京时间 -->
+                <div class="time-item">
+                    <span class="time-label">北京</span>
+                    <span class="time-value" id="beijingTime">--:--:--</span>
+                </div>
+                <!-- 东京时间 -->
+                <div class="time-item">
+                    <span class="time-label">东京</span>
+                    <span class="time-value" id="tokyoTime">--:--:--</span>
+                </div>
+                <!-- UTC 时间 -->
+                <div class="time-item">
+                    <span class="time-label">UTC</span>
+                    <span class="time-value" id="utcTime">--:--:--</span>
+                </div>
+            </div>
+            <div class="market-status">
+                <!-- 市场状态指示器 -->
+                <span class="status-indicator" id="marketStatus"></span>
+                <span class="status-text" id="statusText">市场状态</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 头部导航栏 -->
+    <header class="header">
+        <div class="container">
+            <div class="header-left">
+                <!-- Logo 和标题 -->
+                <div class="logo">
+                    <span class="logo-icon">💰</span>
+                    <span class="logo-text">Digital Finance</span>
+                </div>
+            </div>
+            <nav class="nav-menu">
+                <!-- 导航菜单项 -->
+                <a href="#home" class="nav-item active" data-section="home">首页</a>
+                <a href="#crypto" class="nav-item" data-section="crypto">数字货币</a>
+                <a href="#forex" class="nav-item" data-section="forex">外汇</a>
+                <a href="#commodities" class="nav-item" data-section="commodities">贵金属</a>
+                <a href="#energy" class="nav-item" data-section="energy">能源</a>
+                <a href="#stocks" class="nav-item" data-section="stocks">股票指数</a>
+                <a href="#news" class="nav-item" data-section="news">财经新闻</a>
+                <a href="#ai" class="nav-item" data-section="ai">AI分析</a>
+                <a href="#about" class="nav-item" data-section="about">关于</a>
+            </nav>
+            <div class="header-right">
+                <!-- 主题切换按钮 -->
+                <button class="theme-toggle" id="themeToggle" title="切换主题">
+                    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <!-- 返回顶部按钮 -->
+                <button class="scroll-to-top" id="scrollToTop" title="返回顶部">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="18 15 12 9 6 15"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- Hero 部分 -->
+        <section id="home" class="section hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Digital Finance Center</h1>
+                        <p class="hero-subtitle">实时金融市场数据平台</p>
+                        <p class="hero-description">
+                            全球市场一览无遗 · 加密货币 · 外汇 · 贵金属 · 能源 · 股票指数
+                        </p>
+                        <div class="hero-stats">
+                            <!-- 统计卡片 -->
+                            <div class="stat-card">
+                                <div class="stat-value" id="cryptoCount">--</div>
+                                <div class="stat-label">加密资产</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="forexCount">--</div>
+                                <div class="stat-label">外汇对</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="stockCount">--</div>
+                                <div class="stat-label">股票指数</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <!-- 动画背景 -->
+                        <div class="aurora-bg"></div>
+                        <div class="particle-container" id="particleContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数字货币部分 -->
+        <section id="crypto" class="section crypto-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🔥 数字货币</h2>
+                    <div class="section-controls">
+                        <!-- 搜索框 -->
+                        <input type="text" id="cryptoSearch" class="search-input" placeholder="搜索加密货币...">
+                        <!-- 排序按钮 -->
+                        <div class="sort-buttons">
+                            <button class="sort-btn active" data-sort="market-cap">市值</button>
+                            <button class="sort-btn" data-sort="change">涨幅</button>
+                            <button class="sort-btn" data-sort="volume">成交额</button>
+                        </div>
+                        <!-- 刷新按钮 -->
+                        <button class="refresh-btn" id="cryptoRefresh" title="刷新数据">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span>刷新</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 标签页 -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="crypto-hot">热门</button>
+                    <button class="tab-btn" data-tab="crypto-gainers">涨幅榜</button>
+                    <button class="tab-btn" data-tab="crypto-losers">跌幅榜</button>
+                    <button class="tab-btn" data-tab="crypto-favorites">收藏</button>
+                </div>
+                <!-- 加密货币网格 -->
+                <div id="cryptoGrid" class="asset-grid">
+                    <!-- 由 JavaScript 填充 -->
+                </div>
+                <!-- 更新时间 -->
+                <div class="update-info">
+                    <span class="update-time">最后更新: <span id="cryptoUpdateTime">--:--:--</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 外汇部分 -->
+        <section id="forex" class="section forex-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">💱 外汇</h2>
+                    <div class="section-controls">
+                        <button class="refresh-btn" id="forexRefresh" title="刷新数据">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span>刷新</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 外汇对网格 -->
+                <div id="forexGrid" class="asset-grid">
+                    <!-- 由 JavaScript 填充 -->
+                </div>
+                <!-- 更新时间 -->
+                <div class="update-info">
+                    <span class="update-time">最后更新: <span id="forexUpdateTime">--:--:--</span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 贵金属部分 -->
+        <section id="commodities" class="section commodities-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">✨ 贵金属</h2>
+                    <div class="section-controls">
+                        <button class="refresh-btn" id="commoditiesRefresh" title="刷新数据">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span>刷新</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 贵金属网格 -->
+                <div id="commoditiesGrid" class="asset-grid">
+                    <!-- 由 JavaScript 填充 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 能源部分 -->
+        <section id="energy" class="section energy-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">⛽ 能源</h2>
+                    <div class="section-controls">
+                        <button class="refresh-btn" id="energyRefresh" title="刷新数据">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span>刷新</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 能源网格 -->
+                <div id="energyGrid" class="asset-grid">
+                    <!-- 由 JavaScript 填充 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 股票指数部分 -->
+        <section id="stocks" class="section stocks-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">📈 股票指数</h2>
+                    <div class="section-controls">
+                        <button class="refresh-btn" id="stocksRefresh" title="刷新数据">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                            <span>刷新</span>
+                        </button>
+                    </div>
+                </div>
+                <!-- 股票指数网格 -->
+                <div id="stocksGrid" class="asset-grid">
+                    <!-- 由 JavaScript 填充 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 财经新闻部分 -->
+        <section id="news" class="section news-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">📰 财经新闻</h2>
+                </div>
+                <!-- 新闻标签页 -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="news-crypto">加密新闻</button>
+                    <button class="tab-btn" data-tab="news-forex">外汇新闻</button>
+                    <button class="tab-btn" data-tab="news-stocks">股票新闻</button>
+                    <button class="tab-btn" data-tab="news-macro">宏观新闻</button>
+                </div>
+                <!-- 新闻列表 -->
+                <div id="newsList" class="news-list">
+                    <!-- 由 JavaScript 填充 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- AI 分析部分 -->
+        <section id="ai" class="section ai-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">🤖 AI 分析</h2>
+                </div>
+                <!-- AI 分析卡片网格 -->
+                <div class="ai-grid">
+                    <!-- 市场情绪 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>市场情绪</h3>
+                            <span class="ai-badge">实时</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="sentiment-meter">
+                                <div class="sentiment-bar" id="sentimentBar"></div>
+                            </div>
+                            <div class="sentiment-label" id="sentimentLabel">--</div>
+                        </div>
+                    </div>
+                    <!-- BTC 趋势 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>BTC 趋势</h3>
+                            <span class="ai-badge">分析</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="trend-chart" id="btcTrendChart"></div>
+                            <div class="trend-text" id="btcTrend">--</div>
+                        </div>
+                    </div>
+                    <!-- ETH 趋势 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>ETH 趋势</h3>
+                            <span class="ai-badge">分析</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="trend-chart" id="ethTrendChart"></div>
+                            <div class="trend-text" id="ethTrend">--</div>
+                        </div>
+                    </div>
+                    <!-- 美元指数 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>美元指数</h3>
+                            <span class="ai-badge">分析</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="dxy-value" id="dxyValue">--</div>
+                            <div class="dxy-change" id="dxyChange">--</div>
+                        </div>
+                    </div>
+                    <!-- 黄金分析 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>黄金分析</h3>
+                            <span class="ai-badge">分析</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="gold-value" id="goldValue">--</div>
+                            <div class="gold-analysis" id="goldAnalysis">--</div>
+                        </div>
+                    </div>
+                    <!-- 原油分析 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>原油分析</h3>
+                            <span class="ai-badge">分析</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="oil-value" id="oilValue">--</div>
+                            <div class="oil-analysis" id="oilAnalysis">--</div>
+                        </div>
+                    </div>
+                    <!-- 恐慌指数 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>恐慌贪婪指数</h3>
+                            <span class="ai-badge">指数</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="fear-gauge" id="fearGauge"></div>
+                            <div class="fear-value" id="fearValue">--</div>
+                        </div>
+                    </div>
+                    <!-- 资金流向 -->
+                    <div class="ai-card">
+                        <div class="ai-card-header">
+                            <h3>资金流向</h3>
+                            <span class="ai-badge">追踪</span>
+                        </div>
+                        <div class="ai-card-content">
+                            <div class="flow-chart" id="flowChart"></div>
+                            <div class="flow-text" id="flowText">--</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 关于部分 -->
+        <section id="about" class="section about-section">
+            <div class="container">
+                <div class="about-content">
+                    <h2>关于 Digital Finance Center</h2>
+                    <p>
+                        Digital Finance Center 是一个现代化的实时金融数据平台，为投资者和交易者提供全球市场的实时数据和分析。
+                    </p>
+                    <p>
+                        我们整合了多个顶级金融数据源，包括加密货币、外汇、贵金属、能源和股票指数，为您提供全面的市场视图。
+                    </p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <span class="feature-icon">⚡</span>
+                            <span class="feature-text">实时数据更新</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📊</span>
+                            <span class="feature-text">高级图表分析</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔔</span>
+                            <span class="feature-text">智能提醒</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <span class="feature-text">完全响应式</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- TradingView 图表抽屉 -->
+    <div id="chartDrawer" class="chart-drawer">
+        <div class="drawer-header">
+            <h3 id="drawerTitle">图表</h3>
+            <button class="drawer-close" id="drawerClose">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+        <div class="drawer-controls">
+            <!-- 时间框架按钮 -->
+            <button class="timeframe-btn active" data-timeframe="1m">1m</button>
+            <button class="timeframe-btn" data-timeframe="5m">5m</button>
+            <button class="timeframe-btn" data-timeframe="15m">15m</button>
+            <button class="timeframe-btn" data-timeframe="30m">30m</button>
+            <button class="timeframe-btn" data-timeframe="1h">1H</button>
+            <button class="timeframe-btn" data-timeframe="4h">4H</button>
+            <button class="timeframe-btn" data-timeframe="1d">1D</button>
+            <button class="timeframe-btn" data-timeframe="1w">1W</button>
+            <button class="timeframe-btn" data-timeframe="1m">1M</button>
+        </div>
+        <!-- TradingView 图表容器 -->
+        <div id="tradingViewContainer" class="trading-view-container"></div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>关于</h4>
+                    <p>Digital Finance Center 提供实时金融市场数据和分析。</p>
+                </div>
+                <div class="footer-section">
+                    <h4>功能</h4>
+                    <ul>
+                        <li><a href="#crypto">数字货币</a></li>
+                        <li><a href="#forex">外汇</a></li>
+                        <li><a href="#stocks">股票指数</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>信息</h4>
+                    <ul>
+                        <li><a href="#news">财经新闻</a></li>
+                        <li><a href="#ai">AI分析</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Digital Finance Center. 所有权利保留。</p>
+                <p>数据来源: CoinGecko, Alpha Vantage, TradingView</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast 通知容器 -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- 脚本文件 -->
+    <script src="js/data.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/pwa.js"></script>
+</body>
+</html>
