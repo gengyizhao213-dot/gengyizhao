@@ -58,21 +58,95 @@ const DataManager = {
 
     async getNewsData() {
         if (this.cache.news && Date.now() - this.cacheTime.news < 300000) return this.cache.news;
-        const newsPool = [
-            { title: '美联储维持利率不变，暗示年内可能仅降息一次', source: '华尔街日报', category: 'forex', description: '美联储在最新的政策会议上决定维持利率在5.25%-5.50%区间不变，主席鲍威尔强调通胀仍高于目标。' },
-            { title: '比特币现货 ETF 录得连续 10 日净流入', source: '彭博社', category: 'crypto', description: '随着机构投资者兴趣增加，比特币现货 ETF 表现强劲，单日流入资金超过 2 亿美元。' },
-            { title: '以太坊现货 ETF 获批预期升温，价格突破 $3,800', source: 'CoinDesk', category: 'crypto', description: '分析师认为 SEC 可能会在近期批准以太坊现货 ETF，这引发了市场的剧烈波动。' },
-            { title: '欧佩克+讨论延长减产协议以支撑油价', source: '路透社', category: 'energy', description: '主要产油国正在考虑将现有的减产协议延长至 2024 年底，以应对全球需求疲软。' },
-            { title: '英伟达市值突破 3 万亿美元，超越苹果', source: 'CNBC', category: 'stocks', description: '受 AI 芯片需求驱动，英伟达股价持续飙升，目前已成为全球市值第二大的公司。' }
+        try {
+            const newsItems = [];
+            
+            // 1. 从 Cointelegraph RSS 获取加密货币新闻
+            try {
+                const res1 = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://cointelegraph.com/rss&count=5');
+                const data1 = await res1.json();
+                if (data1.status === 'ok' && data1.items) {
+                    data1.items.slice(0, 3).forEach((item, i) => {
+                        newsItems.push({
+                            title: item.title,
+                            description: (item.description || item.content || '').substring(0, 150),
+                            image: item.thumbnail || `https://picsum.photos/seed/${i}/300/200`,
+                            source: 'Cointelegraph',
+                            url: item.link,
+                            time: this.formatNewsTime(new Date(item.pubDate)),
+                            category: 'crypto'
+                        });
+                    });
+                }
+            } catch (e) { console.log('Cointelegraph 新闻获取失败'); }
+            
+            // 2. 从 CoinDesk RSS 获取金融新闻
+            try {
+                const res2 = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://www.coindesk.com/arc/outboundfeeds/rss/&count=5');
+                const data2 = await res2.json();
+                if (data2.status === 'ok' && data2.items) {
+                    data2.items.slice(0, 3).forEach((item, i) => {
+                        newsItems.push({
+                            title: item.title,
+                            description: (item.description || item.content || '').substring(0, 150),
+                            image: item.thumbnail || `https://picsum.photos/seed/${i + 10}/300/200`,
+                            source: 'CoinDesk',
+                            url: item.link,
+                            time: this.formatNewsTime(new Date(item.pubDate)),
+                            category: 'crypto'
+                        });
+                    });
+                }
+            } catch (e) { console.log('CoinDesk 新闻获取失败'); }
+            
+            // 3. 从 WSJ RSS 获取市场新闻
+            try {
+                const res3 = await fetch('https://api.rss2json.com/v1/api.json?rss_url=https://feeds.a.dj.com/rss/RSSMarketsMain.xml&count=5');
+                const data3 = await res3.json();
+                if (data3.status === 'ok' && data3.items) {
+                    data3.items.slice(0, 2).forEach((item, i) => {
+                        newsItems.push({
+                            title: item.title,
+                            description: (item.description || item.content || '').substring(0, 150),
+                            image: item.thumbnail || `https://picsum.photos/seed/${i + 20}/300/200`,
+                            source: 'Wall Street Journal',
+                            url: item.link,
+                            time: this.formatNewsTime(new Date(item.pubDate)),
+                            category: 'forex'
+                        });
+                    });
+                }
+            } catch (e) { console.log('WSJ 新闻获取失败'); }
+            
+            if (newsItems.length === 0) return this.getMockNewsData();
+            this.cache.news = newsItems;
+            this.cacheTime.news = Date.now();
+            return newsItems;
+        } catch (error) {
+            console.error('获取新闻数据失败:', error);
+            return this.getMockNewsData();
+        }
+    }
+    
+    formatNewsTime(date) {
+        const now = new Date();
+        const diff = now - date;
+        const minutes = Math.floor(diff / 60000);
+        const hours = Math.floor(diff / 3600000);
+        const days = Math.floor(diff / 86400000);
+        if (minutes < 1) return '刚刚';
+        if (minutes < 60) return `${minutes}分钟前`;
+        if (hours < 24) return `${hours}小时前`;
+        if (days < 7) return `${days}天前`;
+        return date.toLocaleDateString('zh-CN');
+    }
+    
+    getMockNewsData() {
+        return [
+            { title: '美联储维持利率不变，暗示年内可能仅降息一次', source: '华尔街日报', category: 'forex', description: '美联储在最新的政策会议上决定维持利率在5.25%-5.50%区间不变，主席鲍威尔强调通胀仍高于目标。', image: 'https://picsum.photos/seed/1/300/200', url: 'https://www.wsj.com', time: '2小时前' },
+            { title: '比特币现货 ETF 录得连续 10 日净流入', source: '彭博社', category: 'crypto', description: '随着机构投资者兴趣增加，比特币现货 ETF 表现强劲，单日流入资金超过 2 亿美元。', image: 'https://picsum.photos/seed/2/300/200', url: 'https://www.bloomberg.com', time: '4小时前' },
+            { title: '以太坊现货 ETF 获批预期升温，价格突破 $3,800', source: 'CoinDesk', category: 'crypto', description: '分析师认为 SEC 可能会在近期批准以太坊现货 ETF，这引发了市场的剧烈波动。', image: 'https://picsum.photos/seed/3/300/200', url: 'https://www.coindesk.com', time: '6小时前' }
         ];
-        const newsData = newsPool.sort(() => 0.5 - Math.random()).map((item, index) => ({
-            ...item, id: `news-${index}`, time: `${Math.floor(Math.random() * 60) + 1} 分钟前`,
-            image: `https://picsum.photos/seed/${index + 20}/120/80`,
-            url: 'https://www.investing.com/news/economy'
-        }));
-        this.cache.news = newsData;
-        this.cacheTime.news = Date.now();
-        return newsData;
     },
 
     async getAIAnalysisData() {
