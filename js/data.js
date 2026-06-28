@@ -7,17 +7,88 @@ const DataManager = {
     cache: { crypto: null, forex: null, commodities: null, energy: null, stocks: null, news: null, ai: null },
     cacheTime: { crypto: 0, forex: 0, commodities: 0, energy: 0, stocks: 0, news: 0, ai: 0 },
     CACHE_DURATION: 60000,
+    
+    // 中文翻译映射
+    chineseNames: {
+        // 加密货币
+        'bitcoin': '比特币',
+        'ethereum': '以太坊',
+        'binancecoin': '币安币',
+        'cardano': '卡尔达诺',
+        'solana': '索拉纳',
+        'ripple': '瑞波币',
+        'polkadot': '波卡',
+        'dogecoin': '狗狗币',
+        'litecoin': '莱特币',
+        'chainlink': '链接币',
+        'uniswap': '优尼斯瓦普',
+        'avalanche-2': '雪崩币',
+        'polygon': '多边形',
+        'cosmos': '宇宙币',
+        'near': '近协议',
+        'monero': '门罗币',
+        'zcash': '零币',
+        'stellar': '恒星币',
+        'tezos': '特佐斯',
+        'algorand': '算法币',
+        
+        // 外汇对
+        'EURUSD': '欧美',
+        'GBPUSD': '英美',
+        'USDJPY': '美日',
+        'AUDUSD': '澳美',
+        'USDCAD': '美加',
+        'USDCNY': '美人民币',
+        'USDCHF': '美瑞郎',
+        'NZDUSD': '纽美',
+        
+        // 商品
+        'XAU': '黄金',
+        'XAG': '白银',
+        'COPPER': '铜',
+        'PLATINUM': '铂金',
+        'PALLADIUM': '钯',
+        
+        // 能源
+        'WTI': 'WTI原油',
+        'BRENT': '布伦特原油',
+        'NG': '天然气',
+        'CRUDE': '原油',
+        'NATGAS': '天然气',
+        
+        // 股票指数
+        'SPX': '标普500',
+        'INDU': '道琼斯',
+        'IXIC': '纳斯达克',
+        'CCMP': '纳指',
+        'GSPC': '标普500',
+        'DJIA': '道琼斯',
+        'VIX': '恐慌指数',
+        'FTSE': '富时100',
+        'DAX': '德指',
+        'HSI': '恒生指数',
+        'N225': '日经225',
+        'SSEC': '上证综指',
+    },
+    
+    getChineseName(key) {
+        return this.chineseNames[key] || key;
+    },
 
     async getCryptoData() {
         if (this.cache.crypto && Date.now() - this.cacheTime.crypto < this.CACHE_DURATION) return this.cache.crypto;
         try {
             const response = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=50&sparkline=true&price_change_percentage=24h');
             const data = await response.json();
-            const cryptoData = data.map(coin => ({
-                id: coin.id, symbol: coin.symbol.toUpperCase(), name: coin.name,
-                price: coin.current_price || 0, change24h: coin.price_change_percentage_24h || 0,
-                image: coin.image, sparkline: coin.sparkline_in_7d?.price || []
-            }));
+            const cryptoData = data.map(coin => {
+                const chineseName = this.getChineseName(coin.id);
+                return {
+                    id: coin.id, symbol: coin.symbol.toUpperCase(), 
+                    name: `${coin.name}（${chineseName}）`,
+                    price: coin.current_price || 0, change24h: coin.price_change_percentage_24h || 0,
+                    image: coin.image, sparkline: coin.sparkline_in_7d?.price || []
+                };
+            });
             this.cache.crypto = cryptoData;
             this.cacheTime.crypto = Date.now();
             return cryptoData;
@@ -29,30 +100,44 @@ const DataManager = {
         const forexData = pairs.map(pair => {
             const base = this.getForexBasePrice(pair);
             const change = (Math.random() - 0.5) * 0.01;
-            return { pair, price: base + change, change, changePercent: (change / base * 100).toFixed(2), bid: base + change - 0.0001, ask: base + change + 0.0001 };
+            const chineseName = this.getChineseName(pair);
+            return { 
+                pair: `${pair}（${chineseName}）`, 
+                price: base + change, change, changePercent: (change / base * 100).toFixed(2), 
+                bid: base + change - 0.0001, ask: base + change + 0.0001 
+            };
         });
         return forexData;
     },
 
     async getCommoditiesData() {
         return [
-            { name: '黄金', symbol: 'XAU', price: 2350.45 + (Math.random() - 0.5) * 10, change24h: 0.45, unit: 'USD/oz' },
-            { name: '白银', symbol: 'XAG', price: 29.32 + (Math.random() - 0.5) * 0.5, change24h: -0.12, unit: 'USD/oz' }
+            { name: 'Gold（黄金）', symbol: 'XAU', price: 2350.45 + (Math.random() - 0.5) * 10, change24h: 0.45, unit: 'USD/oz' },
+            { name: 'Silver（白银）', symbol: 'XAG', price: 29.32 + (Math.random() - 0.5) * 0.5, change24h: -0.12, unit: 'USD/oz' },
+            { name: 'Copper（铜）', symbol: 'COPPER', price: 4.25 + (Math.random() - 0.5) * 0.1, change24h: 0.35, unit: 'USD/lb' },
+            { name: 'Platinum（铂金）', symbol: 'PLATINUM', price: 1025.50 + (Math.random() - 0.5) * 20, change24h: 0.25, unit: 'USD/oz' }
         ];
     },
 
     async getEnergyData() {
         return [
-            { name: 'WTI 原油', symbol: 'WTI', price: 78.45 + (Math.random() - 0.5) * 2, change24h: 1.25, unit: 'USD/bbl' },
-            { name: '天然气', symbol: 'NG', price: 2.15 + (Math.random() - 0.5) * 0.1, change24h: -2.45, unit: 'USD/MMBtu' }
+            { name: 'WTI Crude Oil（WTI原油）', symbol: 'WTI', price: 78.45 + (Math.random() - 0.5) * 2, change24h: 1.25, unit: 'USD/bbl' },
+            { name: 'Brent Crude Oil（布伦特原油）', symbol: 'BRENT', price: 82.10 + (Math.random() - 0.5) * 2, change24h: 0.85, unit: 'USD/bbl' },
+            { name: 'Natural Gas（天然气）', symbol: 'NG', price: 2.15 + (Math.random() - 0.5) * 0.1, change24h: -2.45, unit: 'USD/MMBtu' }
         ];
     },
 
     async getStocksData() {
         return [
-            { name: '纳斯达克', symbol: 'IXIC', price: 16750.45, change24h: 1.15 },
-            { name: '道琼斯', symbol: 'DJIA', price: 39500.20, change24h: 0.35 },
-            { name: '标普 500', symbol: 'GSPC', price: 5250.80, change24h: 0.82 }
+            { name: 'S&P 500（标普500）', symbol: 'SPX', price: 5425.50, change24h: 0.75 },
+            { name: 'Dow Jones（道琼斯）', symbol: 'INDU', price: 42150.25, change24h: 0.35 },
+            { name: 'Nasdaq（纳斯达克）', symbol: 'CCMP', price: 17850.75, change24h: 1.25 },
+            { name: 'VIX Index（恐慌指数）', symbol: 'VIX', price: 14.25, change24h: -2.15 },
+            { name: 'FTSE 100（富时100）', symbol: 'FTSE', price: 8125.50, change24h: 0.45 },
+            { name: 'DAX（德指）', symbol: 'DAX', price: 18450.75, change24h: 0.85 },
+            { name: 'Hang Seng（恒生指数）', symbol: 'HSI', price: 17850.25, change24h: -0.35 },
+            { name: 'Nikkei 225（日经225）', symbol: 'N225', price: 32500.50, change24h: 1.15 },
+            { name: 'Shanghai Composite（上证综指）', symbol: 'SSEC', price: 3025.75, change24h: -0.25 }
         ];
     },
 
@@ -164,7 +249,10 @@ const DataManager = {
     },
 
     getMockCryptoData() {
-        return [{ id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', price: 67234, change24h: 1.85, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' }];
+        return [
+            { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin（比特币）', price: 67234, change24h: 1.85, image: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
+            { id: 'ethereum', symbol: 'ETH', name: 'Ethereum（以太坊）', price: 2250, change24h: 1.25, image: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' }
+        ];
     }
 };
 
